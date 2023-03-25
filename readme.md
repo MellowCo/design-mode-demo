@@ -1,6 +1,8 @@
 # 设计模式
 > 通过设计模式，删除 if else 语句，提高代码的可读性和可维护性
 
+[github 地址](https://github.com/MellowCo/design-mode-demo)
+
 ## 无设计模式
 ```java
 public class OrderHandle {
@@ -148,6 +150,8 @@ void testJDPlatform() {
 
 ---
 ## 枚举工厂策略模式
+
+[github](https://github.com/MellowCo/design-mode-demo/tree/master/src/main/java/com/licl/designmode/enumStrategyFactoryDesign)
 
 * factory
 ```java
