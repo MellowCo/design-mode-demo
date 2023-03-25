@@ -1,4 +1,4 @@
-package com.licl.designmode.strategicFactoryDesign.constant;
+package com.licl.designmode.staticStrategyFactoryDesign.constant;
 
 public enum OrderEnum {
   ORDINARY("ORDINARY", "普通订单"),

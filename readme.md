@@ -24,10 +24,39 @@ OrderHandle orderHandle = new OrderHandle();
 orderHandle.generateOrder(orderType);
 ```
 
-## 策略 + 工程 + 模板
+## 静态工厂策略模式
+
+* factory
+
+```java
+public class StaticStrategyFactory {
+  static Map<String, AbstractOrderHandle> strategyMap = new HashMap<>();
+
+  public static AbstractOrderHandle getStrategy(String type) {
+    return strategyMap.get(type);
+  }
+
+  public static void register(String type, AbstractOrderHandle handle) {
+    strategyMap.put(type, handle);
+  }
+}
+
+```
+
+* 策略抽象类
+```java
+public abstract class AbstractOrderHandle implements InitializingBean {
+
+  public void generateOrder() {
+    throw new UnsupportedOperationException("暂不支持生成该类型订单");
+  }
+}
+```
+
+* 订单策略
 ```java
 @Component
-public class GroupOrderHandle extends BaseHandle {
+public class GroupOrderHandle extends AbstractOrderHandle {
 
   public void generateOrder() {
     System.out.println("生成团购订单");
@@ -35,11 +64,15 @@ public class GroupOrderHandle extends BaseHandle {
 
   @Override
   public void afterPropertiesSet() throws Exception {
-    Factory.register(OrderEnum.GROUP.getCode(), this);
+    StaticStrategyFactory.register(OrderEnum.GROUP.getCode(), this);
   }
 }
-
-// 使用
-Factory.getHandle(OrderEnum.GROUP.getCode()).generateOrder();
 ```
 
+* test
+```java
+@Test
+void testOrdinaryOrder() {
+  StaticStrategyFactory.getStrategy(OrderEnum.ORDINARY.getCode()).generateOrder();
+}
+```
