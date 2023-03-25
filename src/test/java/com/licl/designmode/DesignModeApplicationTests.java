@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.licl.designmode.autoInjectStrategyFactoryDesign.enums.PlatformEnum;
 import com.licl.designmode.autoInjectStrategyFactoryDesign.factory.AutoInjectStrategyFactory;
+import com.licl.designmode.enumStrategyFactoryDesign.factory.WorkOrderEnumFactory;
 import com.licl.designmode.noDesign.OrderHandle;
 import com.licl.designmode.staticStrategyFactoryDesign.enums.OrderEnum;
 import com.licl.designmode.staticStrategyFactoryDesign.factory.StaticStrategyFactory;
@@ -61,6 +62,19 @@ class DesignModeApplicationTests {
 	void testWXPlatform() {
 		// 该平台模拟不支持处理方法，抛出 暂不支持处理该平台 异常
 		autoInjectStrategyFactory.getStrategy(PlatformEnum.WX.getPlatform()).handlePlatform();
+	}
+
+	/**
+	 * 枚举策略工厂模式
+	 */
+	@Test
+	void testConstructionWorkOrder() {
+		WorkOrderEnumFactory.getStrategy(WorkOrderEnumFactory.CONSTRUCTION.getCode()).generateWorkOrder();
+	}
+
+	@Test
+	void testMaintenanceWorkOrder() {
+		WorkOrderEnumFactory.getStrategy(WorkOrderEnumFactory.MAINTENANCE.getCode()).generateWorkOrder();
 	}
 
 }

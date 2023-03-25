@@ -1,5 +1,5 @@
 package com.licl.designmode.autoInjectStrategyFactoryDesign.strategy;
 
-public interface IPlatform {
+public interface IPlatformService {
   String getPlatform();
 }
