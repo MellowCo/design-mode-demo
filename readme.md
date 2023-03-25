@@ -24,6 +24,8 @@ OrderHandle orderHandle = new OrderHandle();
 orderHandle.generateOrder(orderType);
 ```
 
+---
+
 ## 静态工厂策略模式
 
 * factory
@@ -74,5 +76,67 @@ public class GroupOrderHandle extends AbstractOrderHandle {
 @Test
 void testOrdinaryOrder() {
   StaticStrategyFactory.getStrategy(OrderEnum.ORDINARY.getCode()).generateOrder();
+}
+```
+
+---
+## 自动装配工厂策略模式
+* factory
+```java
+@Component
+public class AutoInjectStrategyFactory {
+
+  @Resource
+  public List<AbstractPlatformStrategy> platformStrategyList;
+
+  private final Map<String, AbstractPlatformStrategy> strategyMap = new HashMap<>();
+
+  @PostConstruct
+  public void registered() {
+    platformStrategyList.forEach(strategy -> strategyMap.put(strategy.getPlatform(), strategy));
+  }
+
+  public AbstractPlatformStrategy getStrategy(String platform) {
+    return strategyMap.get(platform);
+  }
+
+}
+```
+
+* 策略抽象类
+```java
+public abstract class AbstractPlatformStrategy implements IPlatform {
+
+  public void handlePlatform() {
+    throw new UnsupportedOperationException("暂不支持处理该平台");
+  }
+}
+
+public interface IPlatform {
+  String getPlatform();
+}
+```
+
+* 策略
+```java
+@Service
+public class JDPlatformStrategy extends AbstractPlatformStrategy {
+  @Override
+  public void handlePlatform() {
+    System.out.println("处理京东平台");
+  }
+
+  @Override
+  public String getPlatform() {
+    return PlatformEnum.JD.getPlatform();
+  }
+}
+```
+
+* test
+```java
+@Test
+void testJDPlatform() {
+  autoInjectStrategyFactory.getStrategy(PlatformEnum.JD.getPlatform()).handlePlatform();
 }
 ```

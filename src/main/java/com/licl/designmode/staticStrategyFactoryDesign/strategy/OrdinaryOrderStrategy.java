@@ -1,11 +1,11 @@
 package com.licl.designmode.staticStrategyFactoryDesign.strategy;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import com.licl.designmode.staticStrategyFactoryDesign.constant.OrderEnum;
+import com.licl.designmode.staticStrategyFactoryDesign.enums.OrderEnum;
 import com.licl.designmode.staticStrategyFactoryDesign.factory.StaticStrategyFactory;;
 
-@Component
+@Service
 public class OrdinaryOrderStrategy extends AbstractOrderStrategy {
 
   public void generateOrder() {
